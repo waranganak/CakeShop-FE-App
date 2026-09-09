@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - User Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/user.css">
+</head>
+<body>
+
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
+<nav>
+    <div class="nav-brand">
+        <div class="logo-icon">
+            <i class="fa-solid fa-cake-candles"></i>
+        </div>
+        <h2>Dream's Cake Portal</h2>
+    </div>
+    <button class="logout-btn" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+</nav>
+
+<div class="container">
+
+    <div class="welcome-card main-dashboard-view">
+        <h1 id="userWelcomeMsg">Welcome Back, User!</h1>
+        <p>Manage cake menus and check system orders easily.</p>
+    </div>
+
+    <div class="grid-cards main-dashboard-view" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="card">
+            <i class="fa-solid fa-utensils"></i>
+            <h3>Cake Menu</h3>
+            <p>Browse our wide variety of fresh, delicious cakes and customized designs.</p>
+            <button class="card-btn" id="btnViewMenu">View Menu</button>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <h3>Orders Management</h3>
+            <p>View and manage customer order statuses, items, and delivery details.</p>
+            <button class="card-btn" id="btnViewOrders">View Orders</button>
+        </div>
+    </div>
+
+    <div id="menu-section" class="content-view" style="display: none;">
+        <button class="back-btn" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+        <div class="welcome-card" style="margin-top: 20px;">
+            <h2><i class="fa-solid fa-utensils" style="color: #d63384;"></i> Cake Menu & Catalog</h2>
+            <p>Browse and explore all available cake items and prices.</p>
+        </div>
+        <div class="card" style="margin-top: 20px; padding: 20px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; color: #fff;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8;">
+                        <th style="padding: 12px;">Item ID</th>
+                        <th style="padding: 12px;">Cake Name</th>
+                        <th style="padding: 12px;">Price</th>
+                    </tr>
+                </thead>
+                <tbody id="menuTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="orders-section" class="content-view" style="display: none;">
+        <button class="back-btn" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+        <div class="welcome-card" style="margin-top: 20px;">
+            <h2><i class="fa-solid fa-cart-shopping" style="color: #d63384;"></i> Orders Management</h2>
+            <p>View and update customer orders efficiently.</p>
+        </div>
+        <div class="card" style="margin-top: 20px; padding: 20px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; color: #fff;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8;">
+                        <th style="padding: 12px;">Order ID</th>
+                        <th style="padding: 12px;">Customer</th>
+                        <th style="padding: 12px;">Total Amount</th>
+                        <th style="padding: 12px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/user.js"></script>
+
+</body>
+</html>

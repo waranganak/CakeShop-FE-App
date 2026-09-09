@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream's Cake - Inventory Stock</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/inventory.css">
+
+  <script>
+    let token = localStorage.getItem("JWT");
+    let role = localStorage.getItem("role");
+
+    if (!token || role !== "ADMIN") {
+      alert("Access Denied! Admins only.");
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+  </div>
+ 
+    <ul class="sidebar-menu">
+    <li><a href="/html/admin-dash.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+  <div class="header-top">
+    <h1>Inventory Stock Management 📦</h1>
+    <p style="color: #94a3b8;">Manage ingredients, stock levels, and units.</p>
+  </div>
+
+  <!-- Add Ingredient Form Card -->
+  <div class="card p-4 mb-4 shadow-sm border-0">
+    <h4 class="mb-3"><i class="fa-solid fa-plus-circle text-primary"></i> Add / Update Ingredient</h4>
+    <form id="ingredientForm">
+      <input type="hidden" id="ingredientId">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Ingredient Name</label>
+          <input type="text" class="form-control" id="ingredientName" placeholder="Ex: Flour, Sugar" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Unit</label>
+          <select class="form-select" id="unit" required>
+            <option value="GRAMS">GRAMS</option>
+            <option value="KG">KG</option>
+            <option value="LITERS">LITERS</option>
+            <option value="MILLILITERS">MILLILITERS</option>
+            <option value="UNITS">UNITS</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Quantity in Stock</label>
+          <input type="number" step="0.01" class="form-control" id="quantityInStock" placeholder="Ex: 50" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Reorder Level</label>
+          <input type="number" step="0.01" class="form-control" id="reorderLevel" placeholder="Ex: 5" required>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" id="btnSaveIngredient">Save Ingredient</button>
+      <button type="button" class="btn btn-secondary" id="btnClearForm">Clear</button>
+    </form>
+  </div>
+
+  <!-- Ingredients Table Section -->
+  <div class="logs-container" style="background: white; padding: 20px; border-radius: 10px;">
+    <h4 class="mb-3"><i class="fa-solid fa-table-list" style="color: #ff758c;"></i> Ingredient Stock List</h4>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Unit</th>
+        <th>Stock Qty</th>
+        <th>Reorder Level</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="ingredient-table-body">
+      <!-- Dynamic Data Goes Here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/inventory.js"></script>
+
+</body>
+</html>

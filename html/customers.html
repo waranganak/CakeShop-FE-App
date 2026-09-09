@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Customers - Dream's Cake</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/customers.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+    </div>
+
+    <ul class="sidebar-menu">
+    <li><a href="/html/admin-dash.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+    <div class="header-top">
+        <h1>Registered Customers</h1>
+        <input type="text" id="search-box" placeholder="Search by name..." onkeyup="searchCustomers()" style="width: 250px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white;">
+    </div>
+
+
+    <div class="card" style="margin-top: 20px;">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody id="customer-table-body">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/js/customer.js"></script>
+</body>
+</html>

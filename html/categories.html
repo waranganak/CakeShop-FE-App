@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - Category Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/category-style.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+        </div>
+    
+    <ul class="sidebar-menu">
+    <li><a href="/html/admin-dash.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header-top">
+            <h1>Category Management 🏷️</h1>
+        </div>
+
+        <div class="category-grid">
+            <div class="card-box">
+                <h2><i class="fa-solid fa-plus-circle" style="color: #ff758c;"></i> Manage Category</h2>
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label>Category ID</label>
+                        <input type="text" id="categoryId" class="form-control" placeholder="Auto Generated" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" id="categoryName" class="form-control" placeholder="Enter category name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="categoryDesc" class="form-control" placeholder="Short description"
+                            required>
+                    </div>
+
+                    <div class="btn-container">
+                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                        <button type="button" id="btnUpdate" class="btn btn-secondary">Update</button>
+                        <button type="button" id="btnClear" class="btn btn-danger">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2><i class="fa-solid fa-list" style="color: #ff758c;"></i> Category List</h2>
+                    <input type="text" id="searchBox" class="form-control" placeholder="Search category..."
+                        style="width: 250px;">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/category.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - Home</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/css/home.css">
+
+    <script>
+        let token = localStorage.getItem("JWT");
+        let role = localStorage.getItem("role");
+
+        if (!token) {
+            alert("Please login first!");
+            window.location.href = "/login.html";
+        }
+    </script>
+</head>
+<body>
+
+<div class="bg-glow-1"></div>
+<div class="bg-glow-2"></div>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="nav-brand">
+        <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+    </div>
+    <div class="nav-links">
+        <a href="home.html" class="active"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes</a>
+        <a href="#" id="logoutBtn" style="color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+</nav>
+
+<!-- Main Banner / Hero Section -->
+<div class="main-container">
+    <div class="hero-card">
+        <h1>Welcome to Dream's Cake! 🍰</h1>
+        <p>Satisfy your sweet cravings with our freshly baked, delicious cakes made with love and perfection.</p>
+        <div class="hero-actions">
+            <a href="admin-dash.html" class="btn-primary"><i class="fa-solid fa-bag-shopping"></i> Browse Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Quick Info Grid -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>Fast Delivery</h3>
+            <p>Get your favorite cakes delivered right to your doorstep safely and quickly.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-heart"></i>
+            <h3>100% Fresh</h3>
+            <p>Baked daily using high-quality ingredients for the best taste.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-star"></i>
+            <h3>Custom Designs</h3>
+            <p>Order customized cakes for birthdays, weddings, and special events.</p>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Custom JS -->
+<script src="/js/home.js"></script>
+
+</body>
+</html>

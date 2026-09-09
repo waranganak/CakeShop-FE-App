@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - Customer Sign Up</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/signup.css">
+</head>
+
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="login-card">
+        <div class="brand-header">
+            <div class="logo-icon">
+                <i class="fa-solid fa-cake-candles"></i>
+            </div>
+            <h2>Join Dream's Cake</h2>
+            <p>Create your customer account to start ordering</p>
+        </div>
+
+        <div id="error-msg"></div>
+        <div id="success-msg"></div>
+
+        <div class="input-group">
+            <div class="input-wrapper">
+                <input type="text" id="username" placeholder="Username / Full Name" autocomplete="off">
+                <i class="fa-solid fa-user field-icon"></i>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-wrapper">
+                <input type="email" id="email" placeholder="Email Address" autocomplete="off">
+                <i class="fa-solid fa-envelope field-icon"></i>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-wrapper">
+                <input type="text" id="phone" placeholder="Phone Number" autocomplete="off">
+                <i class="fa-solid fa-phone field-icon"></i>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-wrapper">
+                <input type="text" id="address" placeholder="Address" autocomplete="off">
+                <i class="fa-solid fa-location-dot field-icon"></i>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-wrapper">
+                <input type="password" id="password" placeholder="Password">
+                <i class="fa-solid fa-lock field-icon"></i>
+                <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+        </div>
+
+        <button class="btn" id="signupBtn" onclick="handleCustomerSignUp()">
+            <span class="btn-text">Sign Up</span>
+            <div class="spinner" id="btnSpinner"></div>
+        </button>
+
+        <div class="card-footer">
+            Already have an account? <a href="/html/login.html">Sign In</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/signup.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - Products Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+    </div>
+   
+    <ul class="sidebar-menu">
+    <li><a href="/html/admin-dash.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="header-top">
+        <h1>Product / Cake Management 🎂</h1>
+    </div>
+
+    <div class="product-grid">
+        <!-- Form Section (Add / Update) -->
+        <div class="card-box">
+            <h2><i class="fa-solid fa-plus-circle" style="color: #ff758c;"></i> Manage Product</h2>
+            <form id="productForm">
+                <div class="form-group">
+                    <label>Product ID</label>
+                    <input type="text" id="productId" class="form-control" placeholder="ID will appear here" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="productName" class="form-control" placeholder="Enter cake name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="description" class="form-control" placeholder="Short description" required>
+                </div>
+                <div class="form-group">
+                    <label>Price (Rs.)</label>
+                    <input type="number" step="0.01" id="price" class="form-control" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="qty" class="form-control" placeholder="Stock quantity" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="categorySelect" class="form-control" required>
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <label style="margin-bottom: 10px;"><i class="fa-solid fa-mortar-pestle"></i> Recipe / Ingredients</label>
+                    <div id="ingredientRows" style="margin-bottom: 10px;">
+                        <div class="ingredient-row" style="display: flex; gap: 10px; margin-bottom: 8px; align-items: center;">
+                            <select class="form-control ingredient-select" style="flex: 2;" required>
+                                <option value="">Select Ingredient</option>
+                            </select>
+                            <input type="number" step="0.01" class="form-control required-qty" placeholder="Required Qty" style="flex: 1;" required>
+                            <button type="button" class="btn btn-danger btn-sm remove-row" style="background: #ff758c; border:none; padding: 6px 10px; color:white; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" id="btnAddIngredient" class="btn btn-secondary" style="background: rgba(255, 255, 255, 0.08); color: white; padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;">+ Add Ingredient</button>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                    <button type="button" id="btnUpdate" class="btn btn-secondary">Update</button>
+                    <button type="button" id="btnClear" class="btn btn-danger">Clear</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2><i class="fa-solid fa-list" style="color: #ff758c;"></i> Product List</h2>
+                <input type="text" id="searchBox" class="form-control" placeholder="Search product..." style="width: 250px;">
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="productTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/product.js"></script>
+</body>
+</html>

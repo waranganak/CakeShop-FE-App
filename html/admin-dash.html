@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream's Cake - Dashboard</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="/css/admin-dash.css">
+
+  <script>
+    let token = localStorage.getItem("JWT");
+    let role = localStorage.getItem("role");
+
+    if (!token || role !== "ADMIN") {
+      alert("Access Denied! Admins only.");
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+  </div>
+  <ul class="sidebar-menu">
+    <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+    <li><a href="#logs-section"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a></li>
+    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+  </ul>
+</div>
+
+<div class="main-content">
+  
+  <div class="header-top" style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <h1>Welcome Back, Admin! 👋</h1>
+      <p style="color: #94a3b8;"><i class="fa-regular fa-calendar"></i> <span id="current-date"></span></p>
+    </div>
+
+    <div class="user-profile-container" style="display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.05); padding: 8px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div style="width: 42px; height: 42px; background: linear-gradient(135deg, #ff758c, #ff7eb3); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 10px rgba(255, 117, 140, 0.3);">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <span id="adminUsername" style="font-weight: 600; font-size: 14px; color: #fff;">Admin User</span>
+        <span id="adminRoleBadge" style="font-size: 10px; font-weight: bold; background: rgba(214, 51, 132, 0.2); color: #ff758c; padding: 2px 8px; border-radius: 6px; width: fit-content; margin-top: 2px;">ADMIN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid" style="margin-top: 20px;">
+    <div class="stat-card">
+      <h3>Total Orders</h3>
+      <div class="value">128</div>
+    </div>
+    <div class="stat-card">
+      <h3>Total Cakes</h3>
+      <div class="value">24</div>
+    </div>
+    <div class="stat-card">
+      <h3>Registered Users</h3>
+      <div class="value">45</div>
+    </div>
+    <div class="stat-card">
+      <h3>Revenue</h3>
+      <div class="value">Rs. 245,000</div>
+    </div>
+  </div>
+
+  <!-- System Users Management Section -->
+  <div style="margin-top: 30px;">
+    <div class="header-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h2 style="font-size: 20px; color: #fff;"><i class="fa-solid fa-users-gear" style="color: #ff758c;"></i> System Users Management</h2>
+      <input type="text" id="search-user" placeholder="Search by username..." onkeyup="filterUsers()" style="width: 250px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white;">
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Username / Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="user-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Audit Logs Table Section -->
+  <div class="logs-container" id="logs-section" style="margin-top: 30px;">
+    <h2><i class="fa-solid fa-shield-halved" style="color: #ff758c;"></i> System Activity Logs</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Action</th>
+        <th>User</th>
+        <th>Timestamp</th>
+      </tr>
+      </thead>
+      <tbody id="logs-table-body">
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/admin-dash.js"></script>
+
+</body>
+</html>
