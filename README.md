@@ -6,7 +6,6 @@
 [![Java](https://img.shields.io/badge/Java-21_LTS-FF2E74.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/projects/jdk/21/)
 [![Database](https://img.shields.io/badge/Database-MySQL_8-38BDF8.svg?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Security](https://img.shields.io/badge/Security-Spring_Security_6_%2B_JWT-F59E0B.svg?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 <p align="center">
   <b>Enterprise-Grade Bakery Management System & E-Commerce Backend Architecture</b><br/>
