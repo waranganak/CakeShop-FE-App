@@ -4,7 +4,6 @@ $(document).ready(function () {
     $('#current-date').text(new Date().toLocaleDateString('en-US', options));
 
     loadAuditLogs();
-
     loadAllUsers();
 
     $('#logoutBtn').on('click', function (e) {
