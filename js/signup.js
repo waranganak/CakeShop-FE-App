@@ -12,7 +12,6 @@ function showError(message) {
     errorDiv.text(message).fadeIn();
     setTimeout(() => { errorDiv.fadeOut(); }, 4000);
 }
-
 function showSuccess(message) {
     let successDiv = $('#success-msg');
     let errorDiv = $('#error-msg');
