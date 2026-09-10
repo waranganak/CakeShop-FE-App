@@ -17,7 +17,6 @@ body {
     overflow: hidden;
     position: relative;
 }
-
 .bg-glow-1, .bg-glow-2 {
     position: absolute;
     width: 400px;
