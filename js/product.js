@@ -38,7 +38,6 @@ function addIngredientRow(selectedIngredientId = "", requiredQty = "") {
     $row.append($select, $input, $btn);
     $("#ingredientRows").append($row);
 }
-
 $(document).ready(function () {
     loadNextProductId(); 
     loadAllProducts();
