@@ -16,7 +16,6 @@ $(document).ready(function () {
             stockQty: parseFloat(quantityInStock),   
             reorderLevel: parseFloat(reorderLevel)   
         };
-
         let method = id ? "PUT" : "POST";
 
         $.ajax({
