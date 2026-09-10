@@ -6,7 +6,6 @@ $(document).ready(function () {
     if ($('#current-date').length) {
         $('#current-date').text(new Date().toLocaleDateString('en-US', options));
     }
-
     updateCartCount();
 
     let customerName = localStorage.getItem("username");
