@@ -12,7 +12,6 @@ $(document).ready(function() {
         $('#menu-section').fadeIn();
         loadCakeMenu();
     });
-
     $("#btnViewOrders").click(function() {
         $('.main-dashboard-view').hide();
         $('#orders-section').fadeIn();
