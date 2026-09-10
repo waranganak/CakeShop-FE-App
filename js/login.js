@@ -10,7 +10,6 @@ function showError(message) {
     errorDiv.text(message).fadeIn();
     setTimeout(() => { errorDiv.fadeOut(); }, 4000);
 }
-
 function setButtonLoading(isLoading) {
     if (isLoading) {
         $('#btnSpinner').show();
