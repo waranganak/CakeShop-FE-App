@@ -145,7 +145,6 @@ th {
 td { 
     color: #e2e8f0; 
 }
-
 tr:hover td { 
     background: rgba(255, 255, 255, 0.02); 
 }
