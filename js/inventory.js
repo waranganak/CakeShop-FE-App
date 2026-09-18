@@ -1,6 +1,7 @@
 $(document).ready(function () {
      
     loadAllIngredients();
+    loadLowStockAlerts(); 
 
     $('#btnSaveIngredient').click(function () {
         let id = $('#ingredientId').val();
@@ -33,6 +34,7 @@ $(document).ready(function () {
                 
                 alert(msg);
                 loadAllIngredients();
+                loadLowStockAlerts(); 
                 clearForm();
             },
             error: function (err) {
@@ -76,11 +78,13 @@ function loadAllIngredients() {
 
             if (ingredients && ingredients.length > 0) {
                 ingredients.forEach(ing => {
+                    let isLow = ing.stockQty <= ing.reorderLevel;
+
                     let row = `<tr>
                                 <td>${ing.id}</td>
-                                <td>${ing.name}</td>
+                                <td>${ing.name} ${isLow ? '<i class="fa-solid fa-triangle-exclamation text-danger ms-1" title="Low Stock!"></i>' : ''}</td>
                                 <td>${ing.unit}</td>
-                                <td><span class="badge bg-success">${ing.stockQty}</span></td>
+                                <td><span class="badge ${isLow ? 'bg-danger' : 'bg-success'}">${ing.stockQty}</span></td>
                                 <td><span class="badge bg-warning text-dark">${ing.reorderLevel}</span></td>
                                 <td>
                                     <button class="btn btn-sm btn-info text-white" onclick="editIngredient(${ing.id}, '${ing.name}', '${ing.unit}', ${ing.stockQty}, ${ing.reorderLevel})">Edit</button>
@@ -96,6 +100,47 @@ function loadAllIngredients() {
         error: function (xhr) {
             console.log("Error loading ingredients:", xhr);
             $('#ingredient-table-body').append(`<tr><td colspan="6" style="text-align: center; color: #f87171;">Failed to load data.</td></tr>`);
+        }
+    });
+}
+
+function loadLowStockAlerts() {
+    $.ajax({
+        url: "http://localhost:8080/v1/ingredient/low-stock",
+        type: 'GET',
+        contentType: "application/json",
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("JWT")
+        },
+        success: function (response) {
+            let lowStockItems = response.body || response;
+            let container = $('#lowStockAlertContainer');
+            container.empty();
+
+            if (lowStockItems && lowStockItems.length > 0) {
+                lowStockItems.forEach(item => {
+                    let itemName = item.ingredientName || item.name || 'Unknown Item';
+                    let stockQty = item.quantityInStock !== undefined ? item.quantityInStock : (item.stockQty !== undefined ? item.stockQty : 0);
+                    let reorderLevel = item.reorderLevel !== undefined ? item.reorderLevel : 0;
+                    let unit = item.unit || '';
+                    
+                    let alertCard = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; color: #dc3545;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="font-size: 18px;"></i>
+                                <div>
+                                    <strong style="color: #f9f2f2;">${itemName}</strong> is running low on stock! 
+                                    <span style="font-size: 13px; color: #6c757d; margin-left: 10px;">(Current: ${stockQty} ${unit}, Reorder Level: ${reorderLevel})</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(alertCard);
+                });
+            }
+        },
+        error: function (xhr) {
+            console.log("Error loading low stock items:", xhr);
         }
     });
 }
@@ -126,6 +171,7 @@ function deleteIngredient(id) {
                 
                 alert(msg);
                 loadAllIngredients();
+                loadLowStockAlerts(); 
             },
             error: function (err) {
                 console.log("Error deleting ingredient:", err);

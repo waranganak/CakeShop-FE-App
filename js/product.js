@@ -12,8 +12,8 @@ function addIngredientRow(selectedIngredientId = "", requiredQty = "") {
     $select.append('<option value="">Select Ingredient</option>');
     
     globalIngredientsList.forEach(ing => {
-        let ingName = ing.name || ing.ingredientName || '';
-        let ingUnit = ing.unit || '';
+        let ingName = ing.ingredientName || ing.name || '';
+        let ingUnit = ing.unit || 'g';
         let $option = $('<option>').val(ing.id).text(`${ingName} (${ingUnit})`);
         if (ing.id == selectedIngredientId) {
             $option.prop('selected', true);
@@ -24,8 +24,15 @@ function addIngredientRow(selectedIngredientId = "", requiredQty = "") {
     let $input = $('<input>').attr({
         'type': 'number',
         'step': '0.01',
-        'placeholder': 'Required Qty'
+        'placeholder': 'Qty in Grams (e.g., 250)'
     }).addClass('form-control required-qty').css('flex', '1').val(requiredQty).prop('required', true);
+
+    let $unitSpan = $('<span>').text('g').css({
+        'font-weight': '600',
+        'color': '#ff758c',
+        'font-size': '14px',
+        'min-width': '15px'
+    });
 
     let $btn = $('<button>').attr('type', 'button').addClass('btn btn-danger btn-sm remove-row').css({
         'background': '#ff758c',
@@ -35,7 +42,7 @@ function addIngredientRow(selectedIngredientId = "", requiredQty = "") {
         'cursor': 'pointer'
     }).html('<i class="fa-solid fa-xmark"></i>');
 
-    $row.append($select, $input, $btn);
+    $row.append($select, $input, $unitSpan, $btn);
     $("#ingredientRows").append($row);
 }
 $(document).ready(function () {
@@ -64,10 +71,12 @@ $(document).ready(function () {
         });
 
         let productObj = {
-            name: $("#productName").val(),
+            productName: $("#productName").val(), 
+            name: $("#productName").val(),         
             description: $("#description").val(),
             price: parseFloat($("#price").val()),
             qty: parseInt($("#qty").val()),
+            imageUrl: $("#imageUrl").val(), 
             categoryId: parseInt($("#categorySelect").val()),
             ingredients: ingredientsArr
         };
@@ -108,10 +117,12 @@ $(document).ready(function () {
 
         let productObj = {
             id: parseInt($("#productId").val()),
+            productName: $("#productName").val(),
             name: $("#productName").val(),
             description: $("#description").val(),
             price: parseFloat($("#price").val()),
             qty: parseInt($("#qty").val()),
+            imageUrl: $("#imageUrl").val(), 
             categoryId: parseInt($("#categorySelect").val()),
             ingredients: ingredientsArr
         };
@@ -154,16 +165,20 @@ $(document).ready(function () {
                 let p = res.body || res.data || res;
                 if (p) {
                     $("#productId").val(p.id);
-                    $("#productName").val(p.name);
+                    $("#productName").val(p.productName || p.name);
                     $("#description").val(p.description);
                     $("#price").val(p.price);
                     $("#qty").val(p.qty);
+                    $("#imageUrl").val(p.imageUrl || p.image || ''); 
                     $("#categorySelect").val(p.categoryId);
 
                     $("#ingredientRows").empty();
-                    if (p.ingredients && p.ingredients.length > 0) {
-                        p.ingredients.forEach(item => {
-                            addIngredientRow(item.ingredientId, item.requiredQuantity);
+                    let recipeIngredients = p.ingredients || p.productIngredients || [];
+                    if (recipeIngredients.length > 0) {
+                        recipeIngredients.forEach(item => {
+                            let ingId = item.ingredientId || (item.ingredient ? item.ingredient.id : '');
+                            let reqQty = item.requiredQuantity || item.quantity || '';
+                            addIngredientRow(ingId, reqQty);
                         });
                     } else {
                         addIngredientRow();
@@ -180,11 +195,12 @@ $(document).ready(function () {
         });
     });
 });
-  $('#logoutBtn').on('click', function (e) {
-        e.preventDefault();
-        localStorage.clear();
-        window.location.href = "login.html";
-    });
+
+$('#logoutBtn').on('click', function (e) {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "login.html";
+});
 
 function loadNextProductId() {
     $.ajax({
@@ -216,9 +232,9 @@ function loadCategoriesToDropdown() {
             let categorySelect = $("#categorySelect");
             categorySelect.empty().append('<option value="">Select Category</option>');
             
-            let categories = res.body || []; 
+            let categories = res.body || res.data || res; 
             
-            if (categories && categories.length > 0) {
+            if (Array.isArray(categories) && categories.length > 0) {
                 categories.forEach(c => {
                     let catName = c.categoryName || c.name;
                     categorySelect.append(`<option value="${c.id}">${catName}</option>`);
@@ -237,7 +253,7 @@ function loadAllIngredientsForDropdown() {
             "Authorization": "Bearer " + localStorage.getItem("JWT")
         },
         success: function (res) {
-            globalIngredientsList = res.body || [];
+            globalIngredientsList = res.body || res.data || res;
             
             if ($("#ingredientRows").children().length === 0) {
                 addIngredientRow();
@@ -245,14 +261,6 @@ function loadAllIngredientsForDropdown() {
         }
     });
 }
-
-$(document).on("click", ".remove-row", function () {
-    if ($("#ingredientRows .ingredient-row").length > 1) {
-        $(this).closest(".ingredient-row").remove();
-    } else {
-        alert("At least one ingredient is required!");
-    }
-});
 
 function loadAllProducts() {
     $.ajax({
@@ -265,16 +273,17 @@ function loadAllProducts() {
         success: function (res) {
             let tableBody = $("#productTableBody");
             tableBody.empty();
-            let products = Array.isArray(res) ? res : (res.body || res.data || res.list || []);
-            if (products && products.length > 0) {
+            let products = res.body || res.data || res;
+
+            if (Array.isArray(products) && products.length > 0) {
                 products.forEach(p => {
                     let row = `<tr>
                         <td class="td-id">${p.id}</td>
-                        <td class="td-name">${p.name}</td>
-                        <td class="td-desc">${p.description || ''}</td>
-                        <td class="td-price">${p.price}</td>
-                        <td class="td-qty">${p.qty}</td>
-                        <td>${p.categoryName || p.categoryId}</td>
+                        <td>${p.productName || p.name}</td>
+                        <td>${p.description}</td>
+                        <td>Rs. ${p.price.toFixed(2)}</td>
+                        <td>${p.qty}</td>
+                        <td>${p.categoryId}</td>
                         <td>
                             <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
                         </td>
@@ -282,7 +291,7 @@ function loadAllProducts() {
                     tableBody.append(row);
                 });
             } else {
-                tableBody.append(`<tr><td colspan="7" style="text-align: center;">No products found</td></tr>`);
+                tableBody.append(`<tr><td colspan="7" style="text-align: center; color: #94a3b8;">No products found.</td></tr>`);
             }
         }
     });
@@ -312,7 +321,19 @@ function clearForm() {
     $("#description").val("");
     $("#price").val("");
     $("#qty").val("");
+    $("#imageUrl").val("");
     $("#categorySelect").val("");
     $("#ingredientRows").empty();
     addIngredientRow(); 
 }
+<<<<<<< HEAD
+=======
+
+$(document).on("click", ".remove-row", function () {
+    if ($("#ingredientRows .ingredient-row").length > 1) {
+        $(this).closest(".ingredient-row").remove();
+    } else {
+        alert("At least one ingredient is required!");
+    }
+});
+>>>>>>> c3c1b74 (Update files)

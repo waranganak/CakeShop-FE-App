@@ -33,7 +33,6 @@ function loadAuditLogs() {
                     let row = `<tr>
                                 <td>${log.id || log.logId || ''}</td>
                                 <td>${log.action || ''}</td>
-                                <td>${log.userId || ''}</td>
                                 <td>${log.timestamp || log.date || ''}</td>
                               </tr>`;
                     tableBody.append(row);
@@ -69,19 +68,16 @@ function loadAllUsers() {
                                 <td>${user.userId || ''}</td>
                                 <td>${user.userName || ''}</td>
                                 <td><span style="background: rgba(214, 51, 132, 0.2); color: #ff758c; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold;">${user.userRoles || ''}</span></td>
-                                <td>
-                                    <button class="btn btn-sm" style="background:#3b82f6; color:white; padding:5px 10px; border-radius:6px; border:none; cursor:pointer;" onclick="selectUser(${user.userId})"><i class="fa-solid fa-pen"></i></button>
-                                </td>
                               </tr>`;
                     tableBody.append(row);
                 });
             } else {
-                tableBody.append(`<tr><td colspan="4" style="text-align: center; color: #94a3b8;">No users found.</td></tr>`);
+                tableBody.append(`<tr><td colspan="3" style="text-align: center; color: #94a3b8;">No users found.</td></tr>`);
             }
         },
         error: function (xhr) {
             console.log("Error loading users:", xhr);
-            $('#user-table-body').append(`<tr><td colspan="4" style="text-align: center; color: #f87171;">Failed to load users.</td></tr>`);
+            $('#user-table-body').append(`<tr><td colspan="3" style="text-align: center; color: #f87171;">Failed to load users.</td></tr>`);
         }
     });
 }
@@ -99,7 +95,7 @@ function filterUsers() {
         type: 'GET',
         contentType: "application/json",
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem("JWT")
+            'Authorization': 'Bearer ' + localStorage.GetaItem("JWT") 
         },
         success: function (response) {
             let users = response.body;
@@ -112,22 +108,23 @@ function filterUsers() {
                                 <td>${user.userId || ''}</td>
                                 <td>${user.userName || ''}</td>
                                 <td><span style="background: rgba(214, 51, 132, 0.2); color: #ff758c; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold;">${user.userRoles || ''}</span></td>
-                                <td>
-                                    <button class="btn btn-sm" style="background:#3b82f6; color:white; padding:5px 10px; border-radius:6px; border:none; cursor:pointer;" onclick="selectUser(${user.userId})"><i class="fa-solid fa-pen"></i></button>
-                                </td>
                               </tr>`;
                     tableBody.append(row);
                 });
             } else {
-                tableBody.append(`<tr><td colspan="4" style="text-align: center; color: #94a3b8;">No matching users found.</td></tr>`);
+                tableBody.append(`<tr><td colspan="3" style="text-align: center; color: #94a3b8;">No matching users found.</td></tr>`);
             }
         },
         error: function (xhr) {
             console.log("Error filtering users:", xhr);
         }
     });
+<<<<<<< HEAD
 }
 
 function selectUser(userId) {
     console.log("Selected User ID:", userId);
 }
+=======
+}
+>>>>>>> c3c1b74 (Update files)

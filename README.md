@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎂 Dream's Cake — Enterprise Bakery Management & Online Ordering Platform
 
 <div align="center">
@@ -65,3 +66,5 @@ flowchart TD
     class Persistence_Layer gold;
 
 
+=======
+>>>>>>> c3c1b74 (Update files)

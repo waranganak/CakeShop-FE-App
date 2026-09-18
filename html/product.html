@@ -17,13 +17,14 @@
     </div>
    
     <ul class="sidebar-menu">
-    <li><a href="/html/admin-dash.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
-    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
-    <li><a href="orders.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
-    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
-    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
-    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-  </ul>
+        <li><a href="/html/admin-dash.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+        <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+        <li><a href="/html/product.html" class="active"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+    <li><a href="/html/order.html"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
+        <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
+        <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+        <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
 </div>
 
 <!-- Main Content -->
@@ -56,6 +57,11 @@
                 <div class="form-group">
                     <label>Quantity</label>
                     <input type="number" id="qty" class="form-control" placeholder="Stock quantity" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="text" id="imageUrl" class="form-control" placeholder="Enter image URL (e.g., https://...)" required>
                 </div>
 
                 <div class="form-group">
