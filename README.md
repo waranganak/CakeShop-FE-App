@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+
 # 🎂 Dream's Cake — Enterprise Bakery Management & Online Ordering Platform
 
 <div align="center">
@@ -21,11 +22,11 @@
 
 **Dream's Cake** revolutionizes custom bakery operations, ingredient inventory tracking, and client order fulfillment. It eliminates manual ledger tracking and fragmented messaging with an automated multi-tier architecture:
 
-* 🎨 **Boutique Visual Aesthetic**: Warm obsidian and cream backgrounds, glass cards with backdrop blur, golden-rose gradients, and elegant typography tailored for premium confectionery branding.
-* 🔒 **Stateless JWT Security**: Secure authentication and role-based authorization powered by Spring Security 6 and custom JSON Web Token filters.
-* 📦 **Modular Domain Architecture**: Clean separation of concerns across Controllers, Services, Repositories, and DTOs with centralized exception handling (`AppExceptionHandler`).
-* 🔄 **Optimized Data Persistence**: High-performance relational mapping using Spring Data JPA, Hibernate, and MySQL with robust transactional integrity.
-* ⚡ **Real-Time Order Workflow**: End-to-end management of custom cake specifications, tier selections, ingredient consumption, and audit trails.
+- 🎨 **Boutique Visual Aesthetic**: Warm obsidian and cream backgrounds, glass cards with backdrop blur, golden-rose gradients, and elegant typography tailored for premium confectionery branding.
+- 🔒 **Stateless JWT Security**: Secure authentication and role-based authorization powered by Spring Security 6 and custom JSON Web Token filters.
+- 📦 **Modular Domain Architecture**: Clean separation of concerns across Controllers, Services, Repositories, and DTOs with centralized exception handling (`AppExceptionHandler`).
+- 🔄 **Optimized Data Persistence**: High-performance relational mapping using Spring Data JPA, Hibernate, and MySQL with robust transactional integrity.
+- ⚡ **Real-Time Order Workflow**: End-to-end management of custom cake specifications, tier selections, ingredient consumption, and audit trails.
 
 ---
 
@@ -68,3 +69,4 @@ flowchart TD
 
 =======
 >>>>>>> c3c1b74 (Update files)
+```

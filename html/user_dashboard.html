@@ -28,11 +28,13 @@
 
 <div class="container">
 
+    <!-- Welcome Card -->
     <div class="welcome-card main-dashboard-view">
         <h1 id="userWelcomeMsg">Welcome Back, User!</h1>
         <p>Manage cake menus and check system orders easily.</p>
     </div>
 
+    <!-- Dashboard Cards Grid -->
     <div class="grid-cards main-dashboard-view" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
         <div class="card">
             <i class="fa-solid fa-utensils"></i>
@@ -47,8 +49,16 @@
             <p>View and manage customer order statuses, items, and delivery details.</p>
             <button class="card-btn" id="btnViewOrders">View Orders</button>
         </div>
+
+        <div class="card">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+            <h3>Supplier Orders</h3>
+            <p>Order raw materials and ingredients via WhatsApp from registered suppliers.</p>
+            <button class="card-btn" id="btnViewSupplierOrders">Manage Supplies</button>
+        </div>
     </div>
 
+    <!-- Menu Section -->
     <div id="menu-section" class="content-view" style="display: none;">
         <button class="back-btn" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
         <div class="welcome-card" style="margin-top: 20px;">
@@ -70,6 +80,7 @@
         </div>
     </div>
 
+    <!-- Customer Orders Section -->
     <div id="orders-section" class="content-view" style="display: none;">
         <button class="back-btn" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
         <div class="welcome-card" style="margin-top: 20px;">
@@ -81,7 +92,7 @@
                 <thead>
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8;">
                         <th style="padding: 12px;">Order ID</th>
-                        <th style="padding: 12px;">Customer</th>
+                        <th style="padding: 12px;">Customer ID</th>
                         <th style="padding: 12px;">Total Amount</th>
                         <th style="padding: 12px;">Status</th>
                     </tr>
@@ -89,6 +100,80 @@
                 <tbody id="ordersTableBody">
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Supplier Orders & WhatsApp Management Section -->
+    <div id="supplier-orders-section" class="content-view" style="display: none;">
+        <button class="back-btn" onclick="showDashboard()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+        
+        <div class="welcome-card" style="margin-top: 20px;">
+            <h2><i class="fa-solid fa-truck-ramp-box" style="color: #d63384;"></i> Supplier Orders & WhatsApp Management</h2>
+            <p>Select ingredients, add quantities, and send multi-item orders directly via WhatsApp.</p>
+        </div>
+
+        <div class="card" style="margin-top: 20px; padding: 25px;">
+            <h4 class="mb-4" style="color: #25D366;"><i class="fab fa-whatsapp me-2"></i> Send Multiple Items Order to Supplier</h4>
+            
+            <input type="hidden" id="selectedSupplierId">
+
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                <div style="flex: 1; min-width: 250px;">
+                    <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Select Supplier Name</label>
+                    <select id="smsSupplierSelect" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #060606; border-radius: 5px;">
+                        <option value="">-- Select Supplier --</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Supplier Contact Number</label>
+                    <input type="text" id="txtSmsContact" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 5px;" readonly placeholder="Contact number">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; align-items: flex-end;">
+                <div style="flex: 2; min-width: 250px;">
+                    <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Select Ingredient</label>
+                    <select id="smsIngredientSelect" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #000000; border-radius: 5px;">
+                        <option value="">-- Select Ingredient --</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Quantity</label>
+                    <input type="number" id="txtSmsQuantity" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 5px;" placeholder="Qty" value="1">
+                </div>
+                <div style="flex: 1; min-width: 150px;">
+                    <button type="button" id="btnAddToList" class="card-btn" style="width: 100%; margin-top: 0; padding: 10px; background: #3b82f6;">
+                        <i class="fa-solid fa-plus me-1"></i> Add Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Added Items Table -->
+            <div style="margin-top: 20px; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; color: #fff;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8;">
+                            <th style="padding: 12px;">Item Name</th>
+                            <th style="padding: 12px;">Quantity</th>
+                            <th style="padding: 12px; width: 90px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderItemListBody">
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 20px; color: #94a3b8;">No items added yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Message / Additional Notes</label>
+                <textarea id="txtSmsMessage" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 5px;" rows="3" placeholder="Enter additional notes or message for the supplier..."></textarea>
+            </div>
+
+            <button type="button" id="btnSendWhatsApp" class="card-btn" style="margin-top: 20px; width: 100%; padding: 12px; background: #25D366; font-weight: 600;">
+                <i class="fab fa-whatsapp me-1"></i> Save Order & Send WhatsApp
+            </button>
         </div>
     </div>
 

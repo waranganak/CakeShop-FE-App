@@ -10,6 +10,7 @@ function showError(message) {
     errorDiv.text(message).fadeIn();
     setTimeout(() => { errorDiv.fadeOut(); }, 4000);
 }
+
 function setButtonLoading(isLoading) {
     if (isLoading) {
         $('#btnSpinner').show();
@@ -49,14 +50,17 @@ function handleLogin() {
 
             let resBody = response.body;
 
-            if (resBody) {
+           if (resBody) {
                 let token = resBody.token;
                 let role = resBody.role;
                 let customerId = resBody.id || resBody.customerId || resBody.userId;
+                
+                let riderId = resBody.riderId || customerId;
 
                 console.log("Extracted Token:", token);
                 console.log("Extracted Role from Server:", role);
-                console.log("Extracted Customer ID:", customerId);
+                console.log("Extracted Customer/User ID:", customerId);
+                console.log("Extracted Rider ID:", riderId);
 
                 if (token) {
                     localStorage.setItem("JWT", token);
@@ -64,6 +68,10 @@ function handleLogin() {
                     if (customerId) {
                         localStorage.setItem("customerId", customerId);
                         localStorage.setItem("userId", customerId);
+                    }
+                    
+                    if (riderId) {
+                        localStorage.setItem("riderId", riderId); 
                     }
                     
                     let formattedRole = role ? role.toString().trim().toUpperCase() : "CUSTOMER";
@@ -74,9 +82,11 @@ function handleLogin() {
 
                     setTimeout(() => {
                         if (cleanRole === "ADMIN") {
-                            window.location.href = "home.html";
+                            window.location.href = "admin-dash.html";
                         } else if (cleanRole === "USER") {
                             window.location.href = "user_dashboard.html";
+                        } else if (cleanRole === "RIDER") {
+                            window.location.href = "Rider-Portal.html"; 
                         } else if (cleanRole === "CUSTOMER") {
                             window.location.href = "customer_dashboard.html";
                         } else {

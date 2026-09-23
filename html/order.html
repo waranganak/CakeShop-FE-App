@@ -9,17 +9,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   
-  <link rel="stylesheet" href="/css/admin-dash.css">
+  <link rel="stylesheet" href="/css/order.css">
 
-  <script>
-    let token = localStorage.getItem("JWT");
-    let role = localStorage.getItem("role");
-
-    if (!token || role !== "ADMIN") {
-      alert("Access Denied! Admins only.");
-      window.location.href = "login.html";
-    }
-  </script>
+ 
 </head>
 <body>
 
@@ -28,38 +20,79 @@
     <i class="fa-solid fa-cake-candles"></i> Dream's Cake
   </div>
   <ul class="sidebar-menu">
-    <li><a href="/html/admin-dash.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-    <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
-    <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
-    <li><a href="/html/order.html" class="active"><i class="fa-solid fa-shopping-cart"></i> Orders</a></li>
-    <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer</a></li>
-    <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
-    <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      <li><a href="/html/admin-dash.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+      <li><a href="/html/categories.html"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+      <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+      <li><a href="/html/order.html" class="active"><i class="fa-solid fa-shopping-cart"></i> Orders Management</a></li>
+      <li><a href="/html/supplier.html"><i class="fa-solid fa-boxes-stacked"></i> Supplier Management</a></li>
+      <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer Management</a></li>
+      <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+      <li><a href="/html/rider.html"><i class="fa-solid fa-motorcycle"></i> Riders Manage</a></li>
+      <li><a href="/html/users.html"><i class="fa-solid fa-user-gear"></i> User Management</a></li>
+
+      <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i
+            class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
   </ul>
 </div>
 
 <div class="main-content">
   <div class="header-top">
-    <h1>Orders Management 🛒</h1>
-    <p style="color: #94a3b8;">Manage customer cake orders and track delivery statuses.</p>
+    <h1>Orders Management</h1>
+    <p>Manage customer cake orders and track delivery & payment statuses.</p>
   </div>
 
-  <div class="logs-container" style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
-    <h4 class="mb-3"><i class="fa-solid fa-list" style="color: #ff758c;"></i> Customer Orders List</h4>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Customer</th>
-        <th>Date / Time</th>
-        <th>Total Amount</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody id="orders-table-body">
-      </tbody>
-    </table>
+  <div class="card p-4">
+    <h4 class="mb-3"><i class="fa-solid fa-list me-2"></i> Customer Orders List</h4>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark-header">
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Date / Time</th>
+            <th>Total Amount</th>
+            <th>Delivery Status</th>
+            <th>Payment Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Details Modal -->
+<div class="modal fade" id="paymentDetailsModal" tabindex="-1" aria-labelledby="paymentDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title" id="paymentDetailsModalLabel"><i class="fa-solid fa-credit-card me-2"></i> Payment Details - Order #<span id="modalOrderId"></span></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3 row">
+          <label class="col-sm-5 fw-bold text-muted">Payment ID:</label>
+          <div class="col-sm-7 text-white" id="modalPaymentId">-</div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-5 fw-bold text-muted">Amount:</label>
+          <div class="col-sm-7 text-success fw-bold" id="modalAmount">-</div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-5 fw-bold text-muted">Payment Method:</label>
+          <div class="col-sm-7 text-white" id="modalPaymentMethod">-</div>
+        </div>
+        <div class="mb-0 row">
+          <label class="col-sm-5 fw-bold text-muted">Payment Status:</label>
+          <div class="col-sm-7" id="modalPaymentStatus">-</div>
+        </div>
+      </div>
+      <div class="modal-footer border-secondary">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 

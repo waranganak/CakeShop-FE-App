@@ -45,6 +45,7 @@ function addIngredientRow(selectedIngredientId = "", requiredQty = "") {
     $row.append($select, $input, $unitSpan, $btn);
     $("#ingredientRows").append($row);
 }
+
 $(document).ready(function () {
     loadNextProductId(); 
     loadAllProducts();
@@ -326,8 +327,6 @@ function clearForm() {
     $("#ingredientRows").empty();
     addIngredientRow(); 
 }
-<<<<<<< HEAD
-=======
 
 $(document).on("click", ".remove-row", function () {
     if ($("#ingredientRows .ingredient-row").length > 1) {
@@ -336,4 +335,3 @@ $(document).on("click", ".remove-row", function () {
         alert("At least one ingredient is required!");
     }
 });
->>>>>>> c3c1b74 (Update files)

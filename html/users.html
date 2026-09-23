@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream's Cake - User Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin-dash.css">
+</head>
+<body>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+    </div>
+  <ul class="sidebar-menu">
+      <li><a href="/html/admin-dash.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+      <li><a href="/html/categories.html" class="active"><i class="fa-solid fa-list-check"></i> Categories</a></li>
+      <li><a href="/html/product.html"><i class="fa-solid fa-birthday-cake"></i> Cakes / Products</a></li>
+      <li><a href="/html/order.html"><i class="fa-solid fa-shopping-cart"></i> Orders Management</a></li>
+      <li><a href="/html/supplier.html"><i class="fa-solid fa-boxes-stacked"></i> Supplier Management</a></li>
+      <li><a href="/html/customers.html"><i class="fa-solid fa-users"></i> Customer Management</a></li>
+      <li><a href="/html/inventory.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory Stock</a></li>
+      <li><a href="/html/rider.html" class="active"><i class="fa-solid fa-motorcycle"></i> Riders Manage</a></li>
+      <li><a href="/html/users.html"><i class="fa-solid fa-user-gear"></i> User Management</a></li>
+
+      <li><a href="#" id="logoutBtn" style="margin-top: auto; color: #f87171;"><i
+            class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header-top" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+      <div>
+        <h1>User Management 👥</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Add, Update, Delete and Search System Users</p>
+      </div>
+    </div>
+
+    <!-- User Form Card (Save / Update) -->
+    <div style="margin-top: 25px;">
+      <div class="card" style="background: rgba(30, 41, 59, 0.7); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <h3 style="color: #fff; margin-bottom: 15px; font-size: 18px;"><i class="fa-solid fa-user-plus" style="color: #ff758c;"></i> Add / Update User</h3>
+        
+        <form id="userForm">
+          <input type="hidden" id="userId">
+          <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+            <div style="flex: 1; min-width: 200px;">
+              <label style="color: #94a3b8; font-size: 12px; display: block; margin-bottom: 5px;">Username / Email</label>
+              <input type="text" id="userName" required placeholder="Enter username or email" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(15, 23, 42, 0.9); color: white;">
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+              <label style="color: #94a3b8; font-size: 12px; display: block; margin-bottom: 5px;">Password</label>
+              <input type="password" id="password" required placeholder="Enter password" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(15, 23, 42, 0.9); color: white;">
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+              <label style="color: #94a3b8; font-size: 12px; display: block; margin-bottom: 5px;">User Role</label>
+              <select id="userRoles" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(15, 23, 42, 0.9); color: white;">
+                <option value="">-- Select Role --</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+                <option value="CUSTOMER">CUSTOMER</option>
+                <option value="RIDER">RIDER</option>
+              </select>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <button type="submit" id="btnSaveUser" style="background: linear-gradient(135deg, #ff758c, #ff7eb3); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                <i class="fa-solid fa-save"></i> Save User
+              </button>
+              <button type="button" id="btnClearForm" style="background: rgba(255,255,255,0.1); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">
+                Clear
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table & Search Section -->
+    <div style="margin-top: 30px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+        <h2 style="font-size: 20px; color: #fff;"><i class="fa-solid fa-table-list" style="color: #ff758c;"></i> Users List</h2>
+        <input type="text" id="searchUserBox" placeholder="Search by username..." style="width: 250px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white;">
+      </div>
+
+      <div class="card" style="overflow-x: auto;">
+        <table style="min-width: 600px; width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="text-align: left; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <th style="padding: 12px;">User ID</th>
+              <th style="padding: 12px;">Username</th>
+              <th style="padding: 12px;">Role</th>
+              <th style="padding: 12px; text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/js/users.js"></script>
+</body>
+</html>

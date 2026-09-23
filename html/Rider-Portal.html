@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream's Cake - Rider Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/Rider-Portal.css">
+</head>
+
+<body>
+
+    <div class="bakery-glow-1"></div>
+    <div class="bakery-glow-2"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fa-solid fa-cake-candles"></i> Dream's Cake
+            </div>
+            <div class="nav-right-container">
+                <div class="nav-menu">
+                    <a href="/html/login.html">Logout</a>
+                    <a href="/html/Rider-Portal.html" class="active">Dashboard</a>
+                    <a href="/html/Rider-Scanner.html" class="scanner-nav-link text-pink fw-bold"><i class="fas fa-qrcode me-1"></i> Open Scanner</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+
+        <div class="cake-hero mb-5">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-motorcycle"></i> Fleet & Delivery Operations
+                </div>
+                <h1>Welcome Back, Rider! <br><span>Ready for Deliveries?</span></h1>
+                <p>Check your assigned cake orders below or jump straight into the dedicated QR Scanner page to verify customer pickups instantly.</p>
+                <div class="hero-buttons">
+                    <a href="/html/Rider-Scanner.html" class="btn-sweet-primary">
+                        <i class="fas fa-qrcode"></i> Launch QR Scanner
+                    </a>
+                </div>
+            </div>
+            <div class="hero-img-box d-none d-lg-flex align-items-center justify-content-center">
+                <div class="rider-hero-icon-glow">
+                    <svg width="90" height="90" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff758c" />
+                                <stop offset="100%" stop-color="#d63384" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" stroke="url(#neonGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M1 18H3M16 18H21C21.55 18 22 17.55 22 17V11C22 10.45 21.55 10 21 10H16V18ZM16 13H19.5L21 15V17H16V13Z" stroke="url(#neonGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="5.5" cy="18" r="2" stroke="url(#neonGradient)" stroke-width="1.5"/>
+                        <circle cx="18.5" cy="18" r="2" stroke="url(#neonGradient)" stroke-width="1.5"/>
+                        <path d="M3 5H11M3 9H8M3 13H7" stroke="url(#neonGradient)" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="card rider-card border-0 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="text-white fw-bold m-0"><i class="fas fa-list-alt text-pink me-2"></i> My Assigned Deliveries</h4>
+                        <a href="/html/Rider-Scanner.html" class="btn btn-sm btn-sweet-outline">
+                            <i class="fas fa-camera me-1"></i> Scan QR Code
+                        </a>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover align-middle mb-0 text-white" style="font-size: 14px;">
+                            <thead class="table-dark-header">
+                                <tr>
+                                    <th class="ps-3 py-3">Order ID</th>
+                                    <th class="py-3">Customer Name</th>
+                                    <th class="py-3">Delivery Address</th>
+                                    <th class="py-3">Total</th>
+                                    <th class="text-end pe-3 py-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assignedDeliveriesTableBody">
+                                <tr>
+                                    <td class="ps-3 fw-bold text-pink">#ORD-1085</td>
+                                    <td>Kasun Perera</td>
+                                    <td class="text-muted">No. 12, Main Street, Galle</td>
+                                    <td>Rs. 4,500/=</td>
+                                    <td class="text-end pe-3">
+                                        <a href="/html/Rider-Scanner.html?orderId=1085" class="btn btn-sm btn-sweet-primary py-1 px-3" style="font-size: 12px;">Verify</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/Rider-Portal.js"></script>
+</body>
+
+</html>

@@ -1,19 +1,22 @@
-$('#logoutBtn').click(function(e) {
-<<<<<<< HEAD
-     if (!localStorage.getItem("JWT")) {
-        window.location.href = "/html/login.html"; 
-        return;
-    }
-    e.preventDefault();
-    localStorage.removeItem("JWT");
-    localStorage.removeItem("role");
-    window.location.href = "/login.html";
-});
-=======
-    e.preventDefault(); 
+$(document).ready(function() {
+    const $mobileMenu = $('#mobile-menu');
+    const $navRightContainer = $('#nav-right-container');
+    const $icon = $mobileMenu.find('i');
 
-    localStorage.clear(); 
-  
-    window.location.href = "/html/login.html";
+    $mobileMenu.click(function() {
+        $navRightContainer.toggleClass('active');
+        
+        if ($navRightContainer.hasClass('active')) {
+            $icon.removeClass('fa-bars').addClass('fa-xmark');
+        } else {
+            $icon.removeClass('fa-xmark').addClass('fa-bars');
+        }
+    });
+
+    $('.nav-menu a, .nav-auth a').click(function() {
+        if ($navRightContainer.hasClass('active')) {
+            $navRightContainer.removeClass('active');
+            $icon.removeClass('fa-xmark').addClass('fa-bars');
+        }
+    });
 });
->>>>>>> c3c1b74 (Update files)

@@ -1,7 +1,7 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const DELIVERY_FEE = 400.00; 
 
-$(document).ready(function () {   
+$(document).ready(function () {    
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     if ($('#current-date').length) {
         $('#current-date').text(new Date().toLocaleDateString('en-US', options));
@@ -284,12 +284,6 @@ function updateCartCount() {
 }
 
 function togglePaymentMethod() {
-    let selectedMethod = $('input[name="paymentMethod"]:checked').val();
-    if (selectedMethod === "CARD") {
-        $('#cardDetailsContainer').slideDown();
-    } else {
-        $('#cardDetailsContainer').slideUp();
-    }
 }
 
 function loadCartTable() {
@@ -326,6 +320,7 @@ function removeFromCart(index) {
     updateCartCount();
     loadCartTable();
 }
+
 function checkoutOrder() {
     if (cart.length === 0) {
         alert("Your cart is empty!");
@@ -333,22 +328,6 @@ function checkoutOrder() {
     }
 
     let selectedPaymentMethod = $('input[name="paymentMethod"]:checked').val() || "COD";
-
-    if (selectedPaymentMethod === "CARD") {
-        let cardNumber = $('#cardNumber').val().trim();
-        let cardExpiry = $('#cardExpiry').val().trim();
-        let cardCvv = $('#cardCvv').val().trim();
-
-        if (!cardNumber || !cardExpiry || !cardCvv) {
-            alert("Please fill in all card details!");
-            return;
-        }
-
-        if (cardNumber.length < 15) {
-            alert("Please enter a valid card number!");
-            return;
-        }
-    }
 
     let customerId = localStorage.getItem("customerId") || localStorage.getItem("userId") || 1;
     let subtotal = cart.reduce((sum, item) => sum + item.subTotal, 0);
@@ -380,11 +359,7 @@ function checkoutOrder() {
             let resBody = response.body;
             let msg = (typeof resBody === 'string') ? resBody : (response.message || (resBody && resBody.message) || "Order placed successfully!");
             
-            if (selectedPaymentMethod === "CARD") {
-                alert("Payment Successful via Card! " + msg);
-            } else {
-                alert(msg + " (Payment: Cash on Delivery)");
-            }
+            alert(msg + " (Selected Payment Method: " + selectedPaymentMethod + ")");
             
             cart = [];
             localStorage.removeItem("cart");
@@ -402,6 +377,145 @@ function checkoutOrder() {
     });
 }
 
+function openDeliveriesSection() {
+    showSection('deliveries-section');
+    
+    let customerId = localStorage.getItem("customerId") || localStorage.getItem("userId");
+    
+    if (!customerId) {
+        console.warn("Customer ID not found in localStorage!");
+    }
+    
+    loadCustomerDeliveries(customerId);
+}
+
+function loadCustomerDeliveries(customerId) {
+    let tbody = $('#deliveriesTableBody');
+    tbody.empty();
+    tbody.append(`<tr><td colspan="4" style="padding: 20px; text-align: center; color: #94a3b8;">Loading your deliveries...</td></tr>`);
+
+    let ordersUrl = customerId ? "http://localhost:8080/v1/orders/customer/" + customerId : "http://localhost:8080/v1/orders";
+
+    $.ajax({
+        url: ordersUrl,
+        type: "GET",
+        contentType: "application/json",
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("JWT")
+        },
+        success: function(response) {
+            let orders = response.body || response.data || response;
+            tbody.empty();
+
+            let hasDeliveries = false;
+
+            if (Array.isArray(orders) && orders.length > 0) {
+                let checkedCount = 0;
+                
+                orders.forEach(order => {
+                    let orderId = order.orderId || order.id;
+                    
+                    if (orderId) {
+                        $.ajax({
+                            url: "http://localhost:8080/v1/delivery/order/" + orderId,
+                            type: "GET",
+                            contentType: "application/json",
+                            headers: {
+                                'Authorization': 'Bearer ' + localStorage.getItem("JWT")
+                            },
+                            success: function(deliveryResponse) {
+                                checkedCount++;
+                                let delivery = deliveryResponse.body || deliveryResponse.data || deliveryResponse;
+                                
+                                if (delivery && (delivery.deliveryId || delivery.id)) {
+                                    hasDeliveries = true;
+                                    
+                                    let deliveryId = delivery.deliveryId || delivery.id;
+                                    let riderName = delivery.riderName || delivery.name || (delivery.rider ? delivery.rider.name : null) || 'Assigned Rider';
+                                    let status = delivery.deliveryStatus || delivery.status || 'PENDING';
+                                    
+                                    let statusColor = '#d63384';
+                                    if (status === 'DELIVERED') statusColor = '#22c55e';
+                                    else if (status === 'OUT_FOR_DELIVERY') statusColor = '#3b82f6';
+
+                                    let row = `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 12px; color: #fff;">#${deliveryId}</td>
+                                        <td style="padding: 12px;">Order #${orderId}</td>
+                                        <td style="padding: 12px; color: #94a3b8;">${riderName}</td>
+                                        <td style="padding: 12px;">
+                                            <span style="padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; background: rgba(214, 51, 132, 0.15); color: ${statusColor};">
+                                                ${status}
+                                            </span>
+                                        </td>
+                                    </tr>`;
+                                    tbody.append(row);
+                                }
+                                
+                                if (checkedCount === orders.length && !hasDeliveries) {
+                                    tbody.html(`<tr><td colspan="4" style="padding: 20px; text-align: center; color: #94a3b8;">No deliveries assigned for your orders yet.</td></tr>`);
+                                }
+                            },
+                            error: function() {
+                                checkedCount++;
+                                if (checkedCount === orders.length && tbody.children().length === 0) {
+                                    tbody.html(`<tr><td colspan="4" style="padding: 20px; text-align: center; color: #94a3b8;">No deliveries assigned for your orders yet.</td></tr>`);
+                                }
+                            }
+                        });
+                    }
+                });
+            } else {
+                tbody.html(`<tr><td colspan="4" style="padding: 20px; text-align: center; color: #94a3b8;">You have no orders to track.</td></tr>`);
+            }
+        },
+        error: function(xhr) {
+            console.error("Failed to load customer orders", xhr);
+            tbody.html(`<tr><td colspan="4" style="padding: 20px; text-align: center; color: #ef4444;">Failed to load your delivery information.</td></tr>`);
+        }
+    });
+}
+function toggleChatWindow() {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+}
+
+function handleChatEnter(e) {
+    if (e.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+function sendChatMessage() {
+    const inputField = document.getElementById('chatInput');
+    const message = inputField.value.trim();
+    if (!message) return;
+
+    $('#chatBody').append(`<div class="user-msg">${message}</div>`);
+    inputField.value = '';
+    
+    const chatBody = document.getElementById('chatBody');
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    $.ajax({
+        url: 'http://localhost:8080/v1/chatbot/ask',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("JWT")
+        },
+        data: JSON.stringify({ message: message }),
+        success: function(response) {
+            let replyText = response.reply || response.body || "Hello! How can I help you?";
+            $('#chatBody').append(`<div class="bot-msg">${replyText}</div>`);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        },
+        error: function(xhr) {
+            console.error("Chatbot API error", xhr);
+            $('#chatBody').append(`<div class="bot-msg">Sorry, I am having trouble connecting to the server right now. Please try again later.</div>`);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    });
+}
 function logout() {
     localStorage.clear();
     window.location.href = "/html/login.html"; 
